@@ -167,41 +167,44 @@ router.post("/", async (req, res) => {
 
 //* UPDATE
 
-//^ PUT api/games/update/
+//^ PUT api/games/:id
 // Update all columns for ID
-router.put("/update", async (req, res) => {
+router.put("/:id", async (req, res) => {
+  //ensure request body is not empty
   if (!req.body) {
     return res.status(400).json({
       message: "Request body empty",
     });
   }
+  //extract ID and convert to number
+  const id = parseInt(req.params.id);
+
   //Deconstruct from post body
-  const { id, title, description, image, genre, status, notes } = req.body;
+  const { title, description, image, genre, status, notes } = req.body;
 
-  // Validation
-  // Check if ID is empty or NAN, or missing
-
-  if (
-    typeof id !== "number" &&
-    !id &&
-    typeof title !== "string" &&
-    !title &&
-    typeof description !== "string" &&
-    !description &&
-    typeof image !== "string" &&
-    !image &&
-    typeof genre !== "string" &&
-    !genre
-  ) {
-    return res.status(400).json({
-      error: "Improper ID - either missing, empty, or NAN",
-      id: `${id}`,
-    });
-  }
+  // // Validation
+  // //todo- Middleware validation
+  // if (
+  //   typeof id !== "number" &&
+  //   !id &&
+  //   typeof title !== "string" &&
+  //   !title &&
+  //   typeof description !== "string" &&
+  //   !description &&
+  //   typeof image !== "string" &&
+  //   !image &&
+  //   typeof genre !== "string" &&
+  //   !genre
+  // ) {
+  //   return res.status(400).json({
+  //     error: "Improper ID - either missing, empty, or NAN",
+  //     id: `${id}`,
+  //   });
+  // }
 
   // SQL
   const query =
-    "UPDATE games SET title = $2, description = $3, image = $4, genre = $5, status = $6, notes = $7 WHERE id = $1";
+    "UPDATE games SET title = COALESCE($2, title), description = COALESCE($3,description), image = COALESCE($4,image), genre = COALESCE($5, genre), status = COALESCE($6,status) , notes = COALESCE($7, notes)  WHERE id = $1";
 
   //Query DB
   try {
@@ -220,206 +223,6 @@ router.put("/update", async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating game", error);
-    return res.sendStatus(500);
-  }
-});
-
-//^ PUT api/games/update/title
-// Update title for ID
-
-router.put("/update/title", async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  // Deconstruct from post body
-  const { id, title } = req.body;
-
-  //Validation
-  //Check if ID is empty/NAN or if title is empty/not a string
-
-  //todo - Update this to include title, also, use an && instead of or
-  if (typeof id !== "number") {
-    return res.status(400).json({
-      error: "Malformed request - check ID (is number) and title (is string)",
-      request: `id: ${id}, title: ${title}`,
-    });
-  }
-  //SQL
-  const query = "UPDATE games SET title = $2 WHERE id = $1";
-
-  try {
-    await pool.query(query, [id, title]);
-    return res.status(201).json({
-      message: `ID ${id} updated`,
-      data: `title: ${title}`,
-    });
-  } catch (error) {
-    console.error("Error updating game title", error);
-    return res.sendStatus(500);
-  }
-});
-
-//^ PUT api/games/update/description
-// Update description for ID
-
-router.put(`/update/description`, async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  const { id, description } = req.body;
-
-  if (!id || typeof id !== "number") {
-    return res.status(400).json({
-      error:
-        "Malformed request - check ID (is number) and description (is string)",
-    });
-  }
-  const query = "UPDATE games SET description = $2 WHERE id = $1";
-
-  try {
-    await pool.query(query, [id, description]);
-    return res.status(201).json({
-      message: `ID: ${id} updated`,
-      data: `Description: ${description}`,
-    });
-  } catch (error) {
-    console.error("Error updating description", error);
-    return res.sendStatus(500);
-  }
-});
-
-//^ PUT api/games/update/image
-// Update image for ID
-
-router.put(`/update/image`, async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  const { id, image } = req.body;
-
-  if (!id || typeof id !== "number") {
-    return res.status(400).json({
-      error: "Malformed request - check ID (is number) and image (is string)",
-    });
-  }
-  const query = "UPDATE games SET image = $2 WHERE id = $1";
-
-  try {
-    await pool.query(query, [id, image]);
-    return res.status(201).json({
-      message: `ID: ${id} updated`,
-      data: `Image: ${image}`,
-    });
-  } catch (error) {
-    console.error("Error updating image", error);
-    return res.sendStatus(500);
-  }
-});
-
-//^ PUT api/games/update/genre
-// Update genre for ID
-
-router.put(`/update/genre`, async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  const { id, genre } = req.body;
-
-  if (!id || typeof id !== "number" || !genre || typeof genre !== "string") {
-    return res.status(400).json({
-      error: "Malformed request - check ID (is number) and genre (is string)",
-    });
-  }
-
-  const query = "UPDATE games SET genre = $2 WHERE id = $1";
-
-  try {
-    await pool.query(query, [id, genre]);
-
-    return res.status(201).json({
-      message: `ID: ${id} updated`,
-      data: `genre: ${genre}`,
-    });
-  } catch (error) {
-    console.error("Error updating genre", error);
-    return res.sendStatus(500);
-  }
-});
-
-//^ PUT api/games/update/status
-// Update status for ID
-
-router.put(`/update/status`, async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  const { id, status } = req.body;
-
-  if (!id || typeof id !== "number" || !status || typeof status !== "string") {
-    return res.status(400).json({
-      error: "Malformed request - check ID (is number) and status (is string)",
-    });
-  }
-
-  const query = "UPDATE games SET status = $2 WHERE id = $1";
-
-  try {
-    await pool.query(query, [id, status]);
-
-    return res.status(201).json({
-      message: `ID: ${id} updated`,
-      data: `status: ${status}`,
-    });
-  } catch (error) {
-    console.error("Error updating status", error);
-    return res.sendStatus(500);
-  }
-});
-
-//^ PUT api/games/update/notes
-// Update notes for ID
-
-router.put(`/update/notes`, async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  const { id, notes } = req.body;
-
-  if (!id || typeof id !== "number" || !notes || typeof notes !== "string") {
-    return res.status(400).json({
-      error: "Malformed request - check ID (is number) and notes (is string)",
-    });
-  }
-
-  const query = "UPDATE games SET notes = $2 WHERE id = $1";
-
-  try {
-    await pool.query(query, [id, notes]);
-
-    return res.status(201).json({
-      message: `ID: ${id} updated`,
-      data: `notes: ${notes}`,
-    });
-  } catch (error) {
-    console.error("Error updating notes", error);
     return res.sendStatus(500);
   }
 });
