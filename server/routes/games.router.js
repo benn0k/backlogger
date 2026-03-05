@@ -10,47 +10,6 @@ const router = express.Router();
 //Middleware
 router.use(express.json());
 
-//*CREATE
-
-//^POST api/games
-// Creates new game in games table
-router.post("/new", async (req, res) => {
-  //Validate if we have an empty request body
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  const { title, description, image, genre, status, notes } = req.body;
-
-  // Validate if our fields are all strings
-  if (
-    typeof title !== "string" &&
-    typeof description !== "string" &&
-    typeof image !== "string" &&
-    typeof genre !== "string" &&
-    typeof status !== "string"
-  ) {
-    console.error(`Error validating request - Request body: ${req.body}`);
-    return res.sendStatus(400);
-  }
-  // SQL
-  const query = `
-      INSERT INTO games (title, description, image, genre, status, notes )
-      VALUES ($1, $2, $3, $4, $5, $6);
-    `;
-
-  //Query DB
-  try {
-    await pool.query(query, [title, description, image, genre, status, notes]);
-    return res.status(201).json({ added: req.body });
-  } catch (error) {
-    console.error("Error inserting game", error);
-    return res.sendStatus(500);
-  }
-});
-
 //*READ
 
 //^GET api/games
@@ -164,6 +123,48 @@ router.get("/search/status", async (req, res) => {
     return res.sendStatus(500);
   }
 });
+
+//*CREATE
+
+//^POST api/games
+// Creates new game in games table
+router.post("/", async (req, res) => {
+  //Validate if we have an empty request body
+  if (!req.body) {
+    return res.status(400).json({
+      message: "Request body empty",
+    });
+  }
+
+  const { title, description, image, genre, status, notes } = req.body;
+
+  // Validate if our fields are all strings
+  if (
+    typeof title !== "string" &&
+    typeof description !== "string" &&
+    typeof image !== "string" &&
+    typeof genre !== "string" &&
+    typeof status !== "string"
+  ) {
+    console.error(`Error validating request`);
+    return res.sendStatus(400);
+  }
+  // SQL
+  const query = `
+      INSERT INTO games (title, description, image, genre, status, notes )
+      VALUES ($1, $2, $3, $4, $5, $6);
+    `;
+
+  //Query DB
+  try {
+    await pool.query(query, [title, description, image, genre, status, notes]);
+    return res.status(201).json({ added });
+  } catch (error) {
+    console.error("Error inserting game", error);
+    return res.sendStatus(500);
+  }
+});
+
 //* UPDATE
 
 //^ PUT api/games/update/
