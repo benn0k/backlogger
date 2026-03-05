@@ -229,22 +229,16 @@ router.put("/:id", async (req, res) => {
 
 // * DELETE
 
-//^ DELETE api/games/delete
-// Delete entire game
+//^ DELETE api/games/:id
+// Delete entire game row
 
-router.delete(`/delete`, async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  const { id } = req.body;
+router.delete(`/:id`, async (req, res) => {
+  // pull ID from URL
+  const id = parseInt(req.params.id);
 
   if (!id || typeof id !== "number") {
     return res.status(400).json({
       error: "Malformed request - check ID (is number)",
-      ID: `${id}`,
     });
   }
   // Delete the row and return the deleted row if present
@@ -264,27 +258,19 @@ router.delete(`/delete`, async (req, res) => {
   }
 });
 
-//^DELETE api/games/delete/title
+//^DELETE api/games/:id/title
 //Delete title from game (technically, update row value to "")
 
-router.delete(`/delete/title`, async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  const { id } = req.body;
+router.delete(`/:id/title`, async (req, res) => {
+  const id = parseInt(req.params.id);
 
   if (!id) {
     return res.status(400).json({
       error: "Malformed request - check ID is number",
       id: id,
-      string: title,
     });
   }
-
-  //inested of null, an empty string?
+  //todo - what do we do if field is already empty?
   const query = `UPDATE games SET title = '' WHERE ID = $1 `;
 
   try {
@@ -298,17 +284,11 @@ router.delete(`/delete/title`, async (req, res) => {
   }
 });
 
-//^DELETE api/games/delete/description
+//^DELETE api/games/:id/description
 //Delete description from game
 
-router.delete(`/delete/description`, async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  const { id } = req.body;
+router.delete(`/:id/description`, async (req, res) => {
+  const id = parseInt(req.params.id);
 
   if (!id) {
     return res.status(400).json({
@@ -331,17 +311,11 @@ router.delete(`/delete/description`, async (req, res) => {
   }
 });
 
-//^DELETE api/games/delete/image
+//^DELETE api/games/:id/image
 //Delete image from game
 
-router.delete(`/delete/image`, async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  const { id } = req.body;
+router.delete(`/:id/image`, async (req, res) => {
+  const id = parseInt(req.params.id);
 
   if (!id) {
     return res.status(400).json({
@@ -364,17 +338,11 @@ router.delete(`/delete/image`, async (req, res) => {
   }
 });
 
-//^DELETE api/games/delete/genre
+//^DELETE api/games/:id/genre
 //Delete genre from game
 
-router.delete(`/delete/genre`, async (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({
-      message: "Request body empty",
-    });
-  }
-
-  const { id } = req.body;
+router.delete(`/:id/genre`, async (req, res) => {
+  const id = parseInt(req.params.id);
 
   if (!id) {
     return res.status(400).json({
@@ -383,13 +351,67 @@ router.delete(`/delete/genre`, async (req, res) => {
     });
   }
 
-  //inested of null, an empty string?
+  //instead of null, an empty string?
   const query = `UPDATE games SET genre = '' WHERE ID = $1 `;
 
   try {
     await pool.query(query, [id]);
     return res.status(201).json({
       message: `genre of ID ${id} deleted`,
+    });
+  } catch (error) {
+    console.error("Error updating game", error);
+    return res.sendStatus(500);
+  }
+});
+
+//^DELETE api/games/:id/status
+//Delete status from game
+
+router.delete(`/:id/status`, async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  if (!id) {
+    return res.status(400).json({
+      error: "Malformed request - check ID is number",
+      id: id,
+    });
+  }
+
+  //instead of null, an empty string?
+  const query = `UPDATE games SET status = '' WHERE ID = $1 `;
+
+  try {
+    await pool.query(query, [id]);
+    return res.status(201).json({
+      message: `status of ID ${id} deleted`,
+    });
+  } catch (error) {
+    console.error("Error updating game", error);
+    return res.sendStatus(500);
+  }
+});
+
+//^DELETE api/games/:id/notes
+//Delete notes from game
+
+router.delete(`/:id/notes`, async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  if (!id) {
+    return res.status(400).json({
+      error: "Malformed request - check ID is number",
+      id: id,
+    });
+  }
+
+  //instead of null, an empty string?
+  const query = `UPDATE games SET notes = '' WHERE ID = $1 `;
+
+  try {
+    await pool.query(query, [id]);
+    return res.status(201).json({
+      message: `notes of ID ${id} deleted`,
     });
   } catch (error) {
     console.error("Error updating game", error);
