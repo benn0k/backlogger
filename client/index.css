@@ -3,13 +3,6 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
-@font-face {
-  font-family: "GlassTTY";
-  src: url("./assets/fonts/Glass_TTY_VT220.ttf");
-  font-weight: medium;
-  font-style: normal;
-}
-
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -25,7 +18,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --background: oklch(1 0 0);
+  --background: oklch(31.317% 0.00004 271.152);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -77,7 +70,6 @@ body {
 }
 
 h1 {
-  font-family: GlassTTY;
   font-size: 3.2em;
   line-height: 1.1;
 }
