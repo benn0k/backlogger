@@ -21,22 +21,6 @@
 }
 
 /* Card CSS */
-.card-container {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.title {
-  font-family: GlassTTY, monospace;
-  color: #0fda3b;
-}
-
-.description {
-  font-family: vt323, monospace;
-  color: rgb(128, 127, 127);
-  font-size: 15px;
-}
 
 .notes {
   font-family: vt323;
