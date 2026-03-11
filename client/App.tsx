@@ -9,7 +9,8 @@ function App() {
     <>
       <div id="page-wrapper">
         <Header></Header>
-        <div id="body-wrapper" className="py-12 px-8">
+        <div id="body-wrapper" className=" px-8">
+          <Card></Card>
           <Card></Card>
         </div>
       </div>

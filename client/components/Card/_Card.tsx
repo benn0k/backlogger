@@ -9,7 +9,7 @@ function Card() {
   return (
     <div
       id="card-container"
-      className="flex flex-col text-left outline outline-dashed outline-offset-15 "
+      className="flex flex-col min-h-64 my-12 text-left outline outline-dashed outline-offset-15 "
     >
       <div id="title-container" className="flex flex-row justify-between">
         <Title></Title>
