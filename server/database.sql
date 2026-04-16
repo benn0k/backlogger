@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS "games" (
 	"genre" varchar(255),
 	"status" varchar(50),
 	"notes" text,
+	"deleted" boolean NOT NULL DEFAULT false,
 	PRIMARY KEY ("id")
 );
 
@@ -45,17 +46,17 @@ INSERT INTO "users" ("username", "email") VALUES
   ('frank', 'frank@example.com');
 
 -- Insert games (10 rows)
-INSERT INTO "games" ("title", "description", "image", "genre", "status", "notes") VALUES
-  ('Starlight Odyssey', 'A space exploration RPG with ship-building mechanics.', 'starlight.jpg', 'RPG', 'in-progress', 'The game is currently in active development.'),
-  ('Pixel Rally', 'Top-down arcade racing with pixel graphics and tight controls.', 'pixel_rally.png', 'Racing', 'backlogged', 'The game is currently in active development.'),
-  ('Mystic Manor', 'A puzzle-adventure set in a haunted mansion.', 'mystic_manor.jpg', 'Adventure', 'backlogged', 'The game is currently in active development.'),
-  ('Cyberstrike 2077', 'Fast-paced cyberpunk FPS with neon visuals.', 'cyberstrike.jpg', 'Shooter', 'in-progress', 'The game is currently in active development.'),
-  ('Farmstead', 'Relaxing farming sim with seasons and crafting.', 'farmstead.png', 'Simulation', 'backlogged', 'The game is currently in active development.'),
-  ('Dungeon Delvers', 'Co-op dungeon crawler with procedurally generated levels.', 'dungeon_delvers.jpg', 'Dungeon', 'in-progress', 'The game is currently in active development.'),
-  ('Skybound Saga', 'Platformer with gliding mechanics and colorful worlds.', 'skybound.png', 'Platformer', 'in-progress', 'The game is currently in active development.'),
-  ('Chef’s Quest', 'Time-management cooking game with thousands of recipes.', 'chefs_quest.jpg', 'Casual', 'in-progress', 'The game is currently in active development.'),
-  ('NeoChess', 'A futuristic chess variant with special pieces and powers.', 'neochess.png', 'Strategy', 'complete', 'The game is currently in active development.'),
-  ('Hidden Trails', 'A hidden object game with story-driven scenes.', 'hidden_trails.jpg', 'Puzzle', 'complete', 'The game is currently in active development');
+INSERT INTO "games" ("title", "description", "image", "genre", "status", "notes", "deleted") VALUES
+  ('Starlight Odyssey', 'A space exploration RPG with ship-building mechanics.', 'starlight.jpg', 'RPG', 'in-progress', 'The game is currently in active development.', false),
+  ('Pixel Rally', 'Top-down arcade racing with pixel graphics and tight controls.', 'pixel_rally.png', 'Racing', 'backlogged', 'The game is currently in active development.', false),
+  ('Mystic Manor', 'A puzzle-adventure set in a haunted mansion.', 'mystic_manor.jpg', 'Adventure', 'backlogged', 'The game is currently in active development.', false),
+  ('Cyberstrike 2077', 'Fast-paced cyberpunk FPS with neon visuals.', 'cyberstrike.jpg', 'Shooter', 'in-progress', 'The game is currently in active development.', false),
+  ('Farmstead', 'Relaxing farming sim with seasons and crafting.', 'farmstead.png', 'Simulation', 'backlogged', 'The game is currently in active development.', false),
+  ('Dungeon Delvers', 'Co-op dungeon crawler with procedurally generated levels.', 'dungeon_delvers.jpg', 'Dungeon', 'in-progress', 'The game is currently in active development.', false),
+  ('Skybound Saga', 'Platformer with gliding mechanics and colorful worlds.', 'skybound.png', 'Platformer', 'in-progress', 'The game is currently in active development.', false),
+  ('Chef’s Quest', 'Time-management cooking game with thousands of recipes.', 'chefs_quest.jpg', 'Casual', 'in-progress', 'The game is currently in active development.', false),
+  ('NeoChess', 'A futuristic chess variant with special pieces and powers.', 'neochess.png', 'Strategy', 'complete', 'The game is currently in active development.', false),
+  ('Hidden Trails', 'A hidden object game with story-driven scenes.', 'hidden_trails.jpg', 'Puzzle', 'complete', 'The game is currently in active development', false);
 
 -- Insert user-game relationships (12 rows)
 -- These reference user IDs and game IDs as they will be assigned (1..6 for users, 1..10 for games)

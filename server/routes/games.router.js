@@ -241,8 +241,8 @@ router.delete(`/:id`, async (req, res) => {
       error: "Malformed request - check ID (is number)",
     });
   }
-  // Delete the row and return the deleted row if present
-  const query = "DELETE FROM games WHERE id = $1 RETURNING *";
+  // Marks as 'deleted' in DB - soft delete
+  const query = "update GAMES set DELETED = TRUE WHERE ID = $1";
 
   try {
     const result = await pool.query(query, [id]);

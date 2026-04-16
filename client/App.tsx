@@ -1,10 +1,27 @@
+import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./components/Card/_Card";
-import Genre from "./components/Card/Genre";
-import Status from "./components/Card/Status";
 import Header from "./components/Header/_Header";
 
+interface Game {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  genre: string;
+  status: string;
+  notes: string;
+}
+
 function App() {
+  const [games, setGames] = useState<Game[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch();
+  });
+
   return (
     <>
       <div id="page-wrapper">
