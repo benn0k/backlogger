@@ -35,11 +35,14 @@ function CardWrapper() {
     fetchGames();
   }, []);
 
+  console.log(games);
+
   return (
     <>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
       {!loading && !error && games.length === 0 && <p>No games found</p>}
+
       {games.map((game) => (
         <Card key={game.id} game={game}></Card>
       ))}

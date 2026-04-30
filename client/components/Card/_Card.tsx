@@ -26,6 +26,8 @@ function Card({ game }: CardProps) {
       className="flex flex-col min-h-64 my-12 text-left outline outline-dashed outline-offset-15 "
     >
       <div id="title-container" className="flex flex-row justify-between">
+        //todo - undo this component mess — move styles onto this level, then
+        just dish out the props here
         <Title title={game.title}></Title>
         <Edit gameId={game.id}></Edit>
       </div>
