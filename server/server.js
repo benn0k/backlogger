@@ -1,28 +1,30 @@
 //. && nodemon --exec tsx ./server/server.ts
 
-import express from 'express';
-import dotenv from 'dotenv';
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
 const port = 3000;
 
 // Routes
-import gamesRouter from './routes/games.router.js';
-import usersRouter from './routes/users.router.js';
+import gamesRouter from "./routes/games.router.js";
+import usersRouter from "./routes/users.router.js";
 
 // Express Middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('build'));
+app.use(express.static("build"));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
 // Routes
-app.use('/api/games', gamesRouter);
-app.use('/api/users', usersRouter);
+app.use("/api/games", gamesRouter);
+app.use("/api/users", usersRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

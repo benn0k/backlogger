@@ -5,23 +5,37 @@ import Edit from "./Edit";
 import Description from "./Description";
 import Notes from "./Notes";
 
-function Card() {
+interface Game {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  genre: string;
+  status: string;
+  notes: string;
+}
+
+interface CardProps {
+  game: Game;
+}
+
+function Card({ game }: CardProps) {
   return (
     <div
       id="card-container"
       className="flex flex-col min-h-64 my-12 text-left outline outline-dashed outline-offset-15 "
     >
       <div id="title-container" className="flex flex-row justify-between">
-        <Title></Title>
-        <Edit></Edit>
+        <Title title={game.title}></Title>
+        <Edit gameId={game.id}></Edit>
       </div>
       <div id="description-notes-container" className="font-[vt323]">
-        <Description></Description>
-        <Notes></Notes>
+        <Description description={game.description}></Description>
+        <Notes notes={game.notes}></Notes>
       </div>
       <div id="card-bottom" className="my-2 flex flex-row justify-between">
-        <Status></Status>
-        <Genre></Genre>
+        <Status status={game.status}></Status>
+        <Genre genre={game.genre}></Genre>
       </div>
     </div>
   );
