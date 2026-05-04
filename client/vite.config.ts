@@ -11,5 +11,9 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "."),
     },
-  },
+  }, 
+  watch: {
+       usePolling: true,
+       interval: 500, // Optional: Check every 500ms
+     },
 });

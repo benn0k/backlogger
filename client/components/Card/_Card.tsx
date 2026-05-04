@@ -1,10 +1,3 @@
-import Genre from "./Genre";
-import Status from "./Status";
-import Title from "./Title";
-import Edit from "./Edit";
-import Description from "./Description";
-import Notes from "./Notes";
-
 interface Game {
   id: number;
   title: string;
@@ -23,21 +16,34 @@ function Card({ game }: CardProps) {
   return (
     <div
       id="card-container"
-      className="flex flex-col min-h-64 my-12 text-left outline outline-dashed outline-offset-15 "
+      className="flex flex-col justify-between min-h-64 my-12 text-left outline outline-dashed outline-offset-15 "
     >
-      <div id="title-container" className="flex flex-row justify-between">
-        //todo - undo this component mess — move styles onto this level, then
-        just dish out the props here
-        <Title title={game.title}></Title>
-        <Edit gameId={game.id}></Edit>
-      </div>
-      <div id="description-notes-container" className="font-[vt323]">
-        <Description description={game.description}></Description>
-        <Notes notes={game.notes}></Notes>
+      <div className="" id="card-top">
+        <div id="title-container" className="flex flex-row justify-between">
+          <h1 id="title" className="font-[GlassTTY] text-lime-500">
+            {game.title}
+          </h1>
+          <a className="font-[GlassTTY] text-xl">{"EDIT/>"}</a>
+        </div>
+        <div id="description-notes-container" className="font-[vt323]">
+          <div
+            id="description"
+            className="flex items-center text-gray-500 size-4 w-full py-4"
+          >
+            {game.description}
+          </div>
+          <div id="notes" className="text-white text-lg">
+            {game.notes}
+          </div>
+        </div>
       </div>
       <div id="card-bottom" className="my-2 flex flex-row justify-between">
-        <Status status={game.status}></Status>
-        <Genre genre={game.genre}></Genre>
+        <div className="font-[vt323] text-lime-500 outline outline-lime-500 outline-dashed outline-offset-2 w-fit px-2 ">
+          {game.status}
+        </div>
+        <div className="font-[vt323] text-gray-500  2 w-fit px-2 ">
+          {game.genre}
+        </div>
       </div>
     </div>
   );
