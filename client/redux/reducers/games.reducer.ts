@@ -1,14 +1,24 @@
 import { combineReducers } from "redux";
 
-interface Action {
-  type: string;
-  payload: object;
+export interface Game {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  genre: string;
+  status: string;
+  notes: string;
 }
 
-const gameInventory = (state = [], action: Action) => {
+interface Action {
+  type: string;
+  payload: Game[] | Game | object;
+}
+
+const gameInventory = (state: Game[] = [], action: Action): Game[] => {
   switch (action.type) {
     case "SET_GAMES":
-      return action.payload;
+      return action.payload as Game[];
     default:
       return state;
   }

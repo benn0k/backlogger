@@ -1,18 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
-import axios from "axios";
+import type { Game } from "../../redux/reducers/games.reducer";
 import Card from "./_Card";
-
-interface Game {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  genre: string;
-  status: string;
-  notes: string;
-}
 
 function CardWrapper() {
   const dispatch = useDispatch();
@@ -20,26 +10,11 @@ function CardWrapper() {
 
   useEffect(() => {
     dispatch({ type: "FETCH_GAMES" });
-  }, []);
-
-  // const [games, setGames] = useState<Game[]>([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchGames = async () => {
-
-  }, []);
-
-  console.log(games);
+  }, [dispatch]);
 
   return (
     <>
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
-      {!loading && !error && games.length === 0 && <p>No games found</p>}
-
-      {games.map((game) => (
+      {games.map((game: Game) => (
         <Card key={game.id} game={game}></Card>
       ))}
     </>
