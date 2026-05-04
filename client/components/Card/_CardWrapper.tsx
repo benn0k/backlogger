@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
 import axios from "axios";
 import Card from "./_Card";
 
@@ -13,26 +15,20 @@ interface Game {
 }
 
 function CardWrapper() {
-  const [games, setGames] = useState<Game[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const games = useSelector((store: RootState) => store.games.gameInventory);
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_GAMES" });
+  }, []);
+
+  // const [games, setGames] = useState<Game[]>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchGames = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axios.get("http://localhost:3000/api/games");
-        setGames(data);
-        setError(null);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
-        setGames([]);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchGames();
   }, []);
 
   console.log(games);
