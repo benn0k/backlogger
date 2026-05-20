@@ -1,0 +1,14 @@
+{
+  "name": "backlogger",
+  "version": "1.0.0",
+  "description": "cd server && npx nodemon server.js  database can be viewed through pgadmin4",
+  "main": "eslint.config.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1"
+  }
+}

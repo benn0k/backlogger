@@ -31,20 +31,20 @@ function Card({ game }: CardProps) {
 
   return (
     <div
-      id="card-container"
-      className="flex flex-col justify-between min-h-64 my-12 text-left outline outline-dashed outline-offset-15"
+      data-testid="game-card"
+      className="card-container flex flex-col justify-between min-h-64 my-12 text-left outline outline-dashed outline-offset-15"
     >
       {isEditMode ? (
         // Edit mode
         <div className="flex flex-col gap-4">
           {/* Add form fields here */}
           <div className="flex gap-2">
-            <a
+            <button
               onClick={handleCancel}
-              className="font-[GlassTTY] text-xl cursor-pointer"
+              className="font-[GlassTTY] text-xl cursor-pointer text-lime-500"
             >
               {"SAVE/>"}
-            </a>
+            </button>
           </div>
         </div>
       ) : (
@@ -54,13 +54,13 @@ function Card({ game }: CardProps) {
             <h1 id="title" className="font-[GlassTTY] text-lime-500">
               {game.title}
             </h1>
-            <a
+            <button
               id="edit"
               onClick={handleEdit}
-              className="font-[GlassTTY] text-xl cursor-pointer"
+              className="font-[GlassTTY] text-xl cursor-pointer text-lime-500 "
             >
               {"EDIT/>"}
-            </a>
+            </button>
           </div>
           <div id="description-notes-container" className="font-[vt323]">
             <div
