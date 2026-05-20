@@ -10,7 +10,6 @@ A full-stack application for managing your gaming backlog. Track games, organize
 - **Redux Toolkit** for state management
 - **Redux-Saga** for side effects
 - **TailwindCSS** for styling
-- **Radix UI & shadcn** for component library
 - **Axios** for HTTP requests
 - **React Router** for navigation
 
@@ -167,6 +166,3 @@ psql -U postgres -d backlogger
 - The project uses ESLint for code quality
 - Prettier is configured for code formatting
 
-## License
-
-ISC
